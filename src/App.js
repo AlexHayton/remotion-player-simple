@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { Player } from "@remotion/player";
+import { MyVideo } from "./MyVideo";
+import { useRef } from "react";
 
-function App() {
+export const App = () => {
+  const playerRef = useRef(null);
+
+  const fps = 30;
+  const secondClipOffset = fps * 60;
+  const durationInFrames = secondClipOffset * 2;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        onClick={() => {
+          const isPlaying = playerRef.current.isPlaying();
+          console.log("isPlaying", isPlaying);
+          if (!isPlaying) {
+            playerRef.current.play();
+          } else {
+            playerRef.current.pause();
+          }
+        }}
+      >
+        Play
+      </button>
+      <Player
+        ref={playerRef}
+        component={MyVideo}
+        durationInFrames={durationInFrames}
+        compositionWidth={426}
+        compositionHeight={360}
+        fps={30}
+        logLevel="trace"
+        spaceKeyToPlayOrPause={true}
+        moveToBeginningWhenEnded={false}
+        initiallyMuted
+        allowFullscreen={false}
+        browserMediaControlsBehavior={{
+          mode: "prevent-media-session",
+        }}
+        style={{
+          borderRadius: "16px",
+        }}
+        showVolumeControls={false}
+        acknowledgeRemotionLicense
+      />
     </div>
   );
-}
+};
 
 export default App;
