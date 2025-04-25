@@ -1,0 +1,45 @@
+diff --git a/node_modules/@remotion/player/.rollup.cache/Users/jonathanburger/remotion/packages/player/dist/esm/use-playback.js b/node_modules/@remotion/player/.rollup.cache/Users/jonathanburger/remotion/packages/player/dist/esm/use-playback.js
+index 602ba97..d61f563 100644
+--- a/node_modules/@remotion/player/.rollup.cache/Users/jonathanburger/remotion/packages/player/dist/esm/use-playback.js
++++ b/node_modules/@remotion/player/.rollup.cache/Users/jonathanburger/remotion/packages/player/dist/esm/use-playback.js
+@@ -1,5 +1,6 @@
+ /* eslint-disable @typescript-eslint/no-use-before-define */
+ import { useContext, useEffect, useRef } from 'react';
++import flushSync from 'react-dom';
+ import { Internals } from 'remotion';
+ import { calculateNextFrame } from './calculate-next-frame.js';
+ import { useIsBackgrounded } from './is-backgrounded.js';
+@@ -74,7 +75,9 @@ export const usePlayback = ({ loop, playbackRate, moveToBeginningWhenEnded, inFr
+             framesAdvanced += framesToAdvance;
+             if (nextFrame !== frameRef.current &&
+                 (!hasEnded || moveToBeginningWhenEnded)) {
+-                setFrame((c) => ({ ...c, [config.id]: nextFrame }));
++                    flushSync(() => {
++                        setFrame((c) => ({ ...c, [config.id]: nextFrame }));
++                    });
+             }
+             if (hasEnded) {
+                 stop();
+diff --git a/node_modules/@remotion/player/dist/cjs/use-playback.js b/node_modules/@remotion/player/dist/cjs/use-playback.js
+index 8a467a9..738f2d2 100644
+--- a/node_modules/@remotion/player/dist/cjs/use-playback.js
++++ b/node_modules/@remotion/player/dist/cjs/use-playback.js
+@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.usePlayback = void 0;
+ /* eslint-disable @typescript-eslint/no-use-before-define */
+ const react_1 = require("react");
++const react_dom_1 = require("react-dom");
+ const remotion_1 = require("remotion");
+ const browser_mediasession_js_1 = require("./browser-mediasession.js");
+ const calculate_next_frame_js_1 = require("./calculate-next-frame.js");
+@@ -84,7 +85,9 @@ const usePlayback = ({ loop, playbackRate, moveToBeginningWhenEnded, inFrame, ou
+             framesAdvanced += framesToAdvance;
+             if (nextFrame !== getCurrentFrame() &&
+                 (!hasEnded || moveToBeginningWhenEnded)) {
+-                setFrame((c) => ({ ...c, [config.id]: nextFrame }));
++                    (0, react_dom_1.flushSync)(() => {
++                        setFrame((c) => ({ ...c, [config.id]: nextFrame }));
++                    });
+             }
+             if (hasEnded) {
+                 stop();
