@@ -5,9 +5,7 @@ import { useRef } from "react";
 export const App = () => {
   const playerRef = useRef(null);
 
-  const fps = 30;
-  const secondClipOffset = fps * 60;
-  const durationInFrames = secondClipOffset * 2;
+  const durationInFrames = 405;
 
   return (
     <div>
@@ -34,7 +32,6 @@ export const App = () => {
         logLevel="trace"
         spaceKeyToPlayOrPause={true}
         moveToBeginningWhenEnded={false}
-        initiallyMuted
         allowFullscreen={false}
         browserMediaControlsBehavior={{
           mode: "prevent-media-session",
