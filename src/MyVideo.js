@@ -1,6 +1,7 @@
 import {
   AbsoluteFill,
   useVideoConfig,
+  Audio,
   OffthreadVideo,
   Sequence,
   staticFile,
@@ -18,29 +19,25 @@ export const MyVideo = () => {
         <OffthreadVideo
           data-testid={`offthread-video-id`}
           pauseWhenBuffering
-          src={staticFile("framecounter.mp4")}
-          muted
+          src={staticFile("e51173b4-93d2-4a6f-b470-710eb7248643-360p.mp4")}
+          volume={0.5}
+          // muted
           startFrom={0}
           crossOrigin="anonymous"
-          acceptableTimeShiftInSeconds={0.08}
+          // acceptableTimeShiftInSeconds={0.08}
           onAutoPlayError={() => {
             console.error("onAutoPlayError");
           }}
         />
-      </Sequence>
-      <Sequence
-        premountFor={fps * 4}
-        from={secondClipOffset}
-        durationInFrames={secondClipOffset}
-      >
-        <OffthreadVideo
-          data-testid={`offthread-video-id-2`}
+        <Audio
+          data-testid={`audio-id`}
           pauseWhenBuffering
-          src={staticFile("framecounter.mp4")}
-          muted
-          startFrom={secondClipOffset}
+          src={staticFile("IMG_0025.mp3")}
+          volume={0.5}
+          // muted
+          startFrom={0}
           crossOrigin="anonymous"
-          acceptableTimeShiftInSeconds={0.08}
+          // acceptableTimeShiftInSeconds={0.08}
           onAutoPlayError={() => {
             console.error("onAutoPlayError");
           }}
