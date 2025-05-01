@@ -11,7 +11,7 @@ import { FrameCounter } from "./FrameCounter";
 export const MyVideo = () => {
   const { fps } = useVideoConfig();
 
-  const secondClipOffset = fps * 10;
+  const secondClipOffset = fps * 5;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
@@ -36,6 +36,34 @@ export const MyVideo = () => {
           volume={0.5}
           // muted
           startFrom={0}
+          crossOrigin="anonymous"
+          // acceptableTimeShiftInSeconds={0.08}
+          onAutoPlayError={() => {
+            console.error("onAutoPlayError");
+          }}
+        />
+      </Sequence>
+      <Sequence from={secondClipOffset} premountFor={fps * 4} durationInFrames={secondClipOffset}>
+        <OffthreadVideo
+          data-testid={`offthread-video-id`}
+          pauseWhenBuffering
+          src={staticFile("e51173b4-93d2-4a6f-b470-710eb7248643-360p.mp4")}
+          volume={0.5}
+          // muted
+          startFrom={secondClipOffset}
+          crossOrigin="anonymous"
+          // acceptableTimeShiftInSeconds={0.08}
+          onAutoPlayError={() => {
+            console.error("onAutoPlayError");
+          }}
+        />
+        <Audio
+          data-testid={`audio-id`}
+          pauseWhenBuffering
+          src={staticFile("IMG_0025.mp3")}
+          volume={0.5}
+          // muted
+          startFrom={secondClipOffset}
           crossOrigin="anonymous"
           // acceptableTimeShiftInSeconds={0.08}
           onAutoPlayError={() => {
